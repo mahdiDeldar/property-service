@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: property-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shervin
+    username: postgres
+    password: postgres
+    initialization-mode: always
+  jpa:
+    properties:
+      hibernate:
+        default_schema: property_service
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    schemas: ${spring.jpa.properties.hibernate.default_schema}
+    baseline-on-migrate: true
+  messages:
+    basename: messages/messages
+  jackson:
+    default-property-inclusion: non_null
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://172.17.0.1:8761/eureka
+
+#logging:
+#  level:
+#    com: debug
+#    org: debug
+server:
+  forward-headers-strategy: framework
+
+app:
+  host: http://localhost:8080
+  url: ${app.host}/${spring.application.name}
+  email:
+    address: Mobileappkeys
+    from: Mobileappkeys@gmail.com
