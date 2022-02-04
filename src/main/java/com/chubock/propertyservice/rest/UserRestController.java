@@ -5,6 +5,7 @@ import com.chubock.propertyservice.model.UserModel;
 import com.chubock.propertyservice.service.PropertyService;
 import com.chubock.propertyservice.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,11 @@ public class UserRestController {
     @Operation(summary = "Getting profile")
     public UserModel getProfile(Authentication authentication) {
         return userService.getProfile(authentication.getName());
+    }
+    @GetMapping("/terminateUser/{id}")
+    @Operation(summary = "delete user and all dependency of it")
+    public ResponseEntity<Boolean> terminate(@PathVariable(value = "id") String id){
+        return userService.deleteUser(id);
     }
 
     @PutMapping

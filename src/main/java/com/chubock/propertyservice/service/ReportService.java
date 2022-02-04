@@ -2,11 +2,14 @@ package com.chubock.propertyservice.service;
 
 import com.chubock.propertyservice.component.EmailSender;
 import com.chubock.propertyservice.entity.Report;
+import com.chubock.propertyservice.entity.User;
 import com.chubock.propertyservice.model.ModelFactory;
 import com.chubock.propertyservice.model.ReportModel;
 import com.chubock.propertyservice.repository.ReportRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ReportService {
@@ -41,5 +44,4 @@ public class ReportService {
         return ModelFactory.of(report, ReportModel.class);
 
     }
-
 }

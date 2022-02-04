@@ -21,4 +21,6 @@ public interface PropertyRepository extends AbstractRepository<Property>, JpaSpe
 
     Optional<Property> findTopByOwnerAndLivingLandlordIsTrue(User user);
 
+    Optional<List<Property>> findAllByOwner(User user);
+
 }

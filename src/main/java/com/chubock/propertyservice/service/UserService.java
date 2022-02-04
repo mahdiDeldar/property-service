@@ -5,36 +5,61 @@ import com.chubock.propertyservice.endpoint.UserEndpoint;
 import com.chubock.propertyservice.endpoint.dto.UserDTO;
 import com.chubock.propertyservice.entity.Property;
 import com.chubock.propertyservice.entity.User;
+import com.chubock.propertyservice.exception.PropertyNotFoundException;
+import com.chubock.propertyservice.exception.UserNotFoundException;
 import com.chubock.propertyservice.model.ModelFactory;
 import com.chubock.propertyservice.model.UserModel;
 import com.chubock.propertyservice.repository.PropertyRepository;
+import com.chubock.propertyservice.repository.ReportRepository;
 import com.chubock.propertyservice.repository.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final PropertyRepository propertyRepository;
+    private final ReportRepository reportRepository;
 
     private final UserEndpoint userEndpoint;
 
     private final HibernateManager hibernateManager;
 
-    public UserService(UserRepository userRepository, PropertyRepository propertyRepository, UserEndpoint userEndpoint, HibernateManager hibernateManager) {
+    public UserService(ReportRepository reportRepository, UserRepository userRepository, PropertyRepository propertyRepository, UserEndpoint userEndpoint, HibernateManager hibernateManager) {
         this.userRepository = userRepository;
         this.propertyRepository = propertyRepository;
         this.userEndpoint = userEndpoint;
         this.hibernateManager = hibernateManager;
+        this.reportRepository = reportRepository;
     }
 
     @Transactional
     public UserModel getProfile(String id) {
         return getModel(get(id));
+    }
+
+    @Transactional()
+    public ResponseEntity<Boolean> deleteUser(String id) {
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent()) {
+            return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.OK);
+        }
+        propertyRepository.findAllByOwner(user.get()).get().forEach(p -> {
+            propertyRepository.delete(p);
+        });
+        reportRepository.findReportsByReporter(user.get()).forEach(r -> {
+            reportRepository.delete(r);
+        });
+        userRepository.delete(user.get());
+        return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
     }
 
     @Transactional
@@ -104,6 +129,7 @@ public class UserService {
         userEndpoint.updateUserDetails(userInfo);
 
     }
+
     private UserModel getModel(User user) {
 
         UserModel profile = ModelFactory.of(user, UserModel.class);
