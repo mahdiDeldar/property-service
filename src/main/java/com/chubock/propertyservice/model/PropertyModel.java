@@ -2,6 +2,7 @@ package com.chubock.propertyservice.model;
 
 import com.chubock.propertyservice.entity.Property;
 import com.chubock.propertyservice.entity.PropertyType;
+import com.chubock.propertyservice.enumeration.Currency;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -116,7 +117,7 @@ public class PropertyModel extends AbstractModel<Property> {
         setSmoking(entity.getSmoking());
         setPets(entity.getPets());
         setLeaseTerm(entity.getLeaseTerm());
-        setRentCurrency(entity.getRentCurrency());
+        setRentCurrency(entity.getRentCurrency().toString());
         setMonthlyRent(entity.getMonthlyRent());
         setMainImage(entity.getMainImage());
         setSharedBathroom(entity.getSharedBathroom());

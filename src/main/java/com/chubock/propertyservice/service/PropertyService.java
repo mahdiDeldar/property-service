@@ -2,6 +2,7 @@ package com.chubock.propertyservice.service;
 
 import com.chubock.propertyservice.entity.Property;
 import com.chubock.propertyservice.entity.User;
+import com.chubock.propertyservice.enumeration.Currency;
 import com.chubock.propertyservice.exception.PropertyNotFoundException;
 import com.chubock.propertyservice.exception.UserNotFoundException;
 import com.chubock.propertyservice.model.ModelFactory;
@@ -150,7 +151,7 @@ public class PropertyService {
                 .pets(model.getPets())
                 .leaseTerm(model.getLeaseTerm())
                 .monthlyRent(model.getMonthlyRent())
-                .rentCurrency(model.getRentCurrency())
+                .rentCurrency(Currency.valueOf(model.getRentCurrency()))
                 .availabilityDate(model.getAvailabilityDate())
                 .latitude(model.getLatitude())
                 .longitude(model.getLongitude())

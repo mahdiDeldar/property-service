@@ -1,5 +1,6 @@
 package com.chubock.propertyservice.entity;
 
+import com.chubock.propertyservice.enumeration.Currency;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cascade;
@@ -55,7 +56,8 @@ public class Property extends AbstractEntity {
     @PositiveOrZero
     private Long monthlyRent;
 
-    private String rentCurrency;
+    @Enumerated(value = EnumType.STRING)
+    private Currency rentCurrency;
 
     @Column(columnDefinition = "date")
     private LocalDate availabilityDate;
