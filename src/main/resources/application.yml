@@ -23,6 +23,8 @@ spring:
     web:
       pageable:
         default-page-size: 20
+#  profiles:
+#    include: 'develop'
 
 eureka:
   instance:
