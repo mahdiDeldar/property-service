@@ -65,8 +65,8 @@ public class UserService {
             reportList.forEach(r -> {
                 reportRepository.delete(r);
             });
-            userRepository.delete(user.get());
         }
+        userRepository.delete(user.get());
         return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
     }
 
