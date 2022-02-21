@@ -4,6 +4,7 @@ import com.chubock.propertyservice.component.HibernateManager;
 import com.chubock.propertyservice.endpoint.UserEndpoint;
 import com.chubock.propertyservice.endpoint.dto.UserDTO;
 import com.chubock.propertyservice.entity.Property;
+import com.chubock.propertyservice.entity.Report;
 import com.chubock.propertyservice.entity.User;
 import com.chubock.propertyservice.exception.PropertyNotFoundException;
 import com.chubock.propertyservice.exception.UserNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,13 +54,19 @@ public class UserService {
         if (!user.isPresent()) {
             return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.OK);
         }
-        propertyRepository.findAllByOwner(user.get()).get().forEach(p -> {
-            propertyRepository.delete(p);
-        });
-        reportRepository.findReportsByReporter(user.get()).forEach(r -> {
-            reportRepository.delete(r);
-        });
-        userRepository.delete(user.get());
+        List<Property> propertyList = propertyRepository.findAllByOwner(user.get());
+        if (!propertyList.isEmpty()) {
+            propertyList.forEach(p -> {
+                propertyRepository.delete(p);
+            });
+        }
+        List<Report> reportList = reportRepository.findReportsByReporter(user.get());
+        if (!reportList.isEmpty()) {
+            reportList.forEach(r -> {
+                reportRepository.delete(r);
+            });
+            userRepository.delete(user.get());
+        }
         return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
     }
 
