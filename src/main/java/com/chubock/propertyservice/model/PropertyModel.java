@@ -88,7 +88,7 @@ public class PropertyModel extends AbstractModel<Property> {
     private Boolean favourite;
 
     public String getUniversalLink() {
-        return "https://test.elegant-designs.net/properties/" + getId();
+        return "https://beta.housemate.space/properties/" + getId();
     }
 
     @Override

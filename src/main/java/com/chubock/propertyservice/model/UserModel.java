@@ -69,7 +69,7 @@ public class UserModel extends AbstractModel<User> {
     }
 
     public String getUniversalLink() {
-        return "https://test.elegant-designs.net/housemates/" + getId();
+        return "https://beta.housemate.space/housemates/" + getId();
     }
 
     public void fill(User entity) {
