@@ -22,7 +22,7 @@ public class HousemateController {
     public String housemate(@PathVariable("id") String id, Model model) {
 
         UserModel housemate = housemateService.getHousemate(id);
-        model.addAttribute("url", "https://beta.housemate.space" + id);
+        model.addAttribute("url", "https://beta.housemate.space/housemates/" + id);
         model.addAttribute("housemate", housemate);
         return "housemates";
     }
