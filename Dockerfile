@@ -9,23 +9,13 @@ FROM openjdk:slim-buster
 RUN apt update
 RUN apt install -y wget
 RUN apt install -y net-tools
-RUN wget https://download-gcdn.ej-technologies.com/jprofiler/jprofiler_linux_13_0_1.tar.gz -P /tmp/ && \
-  tar -xzf /tmp/jprofiler_linux_13_0_1.tar.gz -C /usr/local &&\
-  rm /tmp/jprofiler_linux_13_0_1.tar.gz
+
 RUN adduser spring
 USER spring:spring
-<<<<<<< HEAD
-ARG DEPENDENCY=/src/build/dependency
-COPY --from=builder ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY --from=builder ${DEPENDENCY}/META-INF /app/META-INF
-COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
 
-# ENTRYPOINT ["java","-cp","app:app/lib/*","com.chubock.propertyservice.PropertyServiceApplication", "-agentpath:/usr/local/jprofiler13.0.1/bin/linux-x64/libjprofilerti.so=port=8849"]
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.chubock.propertyservice.PropertyServiceApplication"]
-=======
 ARG DEPENDENCY=build/dependency
 COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app
 ENTRYPOINT ["java","-cp","app:app/lib/*","com.chubock.propertyservice.PropertyServiceApplication"]
->>>>>>> 9aa7e57cb2b3408e6ee59d8546613cf653a0d6d7
+
