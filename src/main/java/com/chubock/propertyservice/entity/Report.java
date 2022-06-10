@@ -23,10 +23,12 @@ public class Report extends AbstractEntity {
 
     @NotEmpty
     @Column(length = 3000)
-    private String text;
+    private String cause;
 
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User reporter;
+
+    private String propertyId;
 
 }

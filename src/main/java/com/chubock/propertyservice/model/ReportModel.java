@@ -21,16 +21,18 @@ public class ReportModel extends AbstractModel<Report> {
     private String type;
 
     @NotEmpty
-    private String text;
+    private String cause;
 
     private UserModel reporter;
+
+    private String propertyId;
 
     @Override
     public void fill(Report entity) {
         super.fill(entity);
 
         setType(entity.getType());
-        setText(entity.getText());
+        setCause(entity.getCause());
 
     }
 }
