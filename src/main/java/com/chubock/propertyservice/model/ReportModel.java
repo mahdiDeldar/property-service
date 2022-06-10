@@ -33,6 +33,7 @@ public class ReportModel extends AbstractModel<Report> {
 
         setType(entity.getType());
         setCause(entity.getCause());
+        setPropertyId(entity.getPropertyId());
 
     }
 }
