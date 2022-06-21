@@ -115,7 +115,11 @@ public class PropertyService {
         return owner.getFavorites()
                 .stream()
                 .filter(property -> !property.isDeleted())
-                .map(property -> ModelFactory.of(property, PropertyModel.class))
+                .map(property -> {
+                    PropertyModel propertyModel = ModelFactory.of(property, PropertyModel.class);
+                    propertyModel.setOwner(ModelFactory.of(property.getOwner(), UserModel.class));
+                    return propertyModel;
+                })
                 .collect(Collectors.toList());
     }
 
