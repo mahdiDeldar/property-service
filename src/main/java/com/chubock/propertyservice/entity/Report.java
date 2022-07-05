@@ -20,15 +20,14 @@ public class Report extends AbstractEntity {
 
     @NotEmpty
     private String type;
-
     @NotEmpty
     @Column(length = 3000)
     private String cause;
-
+    @Column(length = 3000)
+    private String text;
     @NotNull
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User reporter;
-
     private String propertyId;
 
 }

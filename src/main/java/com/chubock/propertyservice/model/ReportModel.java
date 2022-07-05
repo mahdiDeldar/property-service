@@ -2,10 +2,7 @@ package com.chubock.propertyservice.model;
 
 
 import com.chubock.propertyservice.entity.Report;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotEmpty;
@@ -19,12 +16,10 @@ public class ReportModel extends AbstractModel<Report> {
 
     @NotEmpty
     private String type;
-
-    @NotEmpty
-    private String cause;
-
+    @Builder.Default
+    private String cause = "-";
+    private String text;
     private UserModel reporter;
-
     private String propertyId;
 
     @Override
@@ -33,6 +28,7 @@ public class ReportModel extends AbstractModel<Report> {
 
         setType(entity.getType());
         setCause(entity.getCause());
+        setText(entity.getText());
         setPropertyId(entity.getPropertyId());
 
     }
