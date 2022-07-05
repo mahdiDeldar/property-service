@@ -31,13 +31,14 @@ public class ReportService {
         Report report = Report.builder()
                 .type(model.getType())
                 .cause(model.getCause())
+                .text(model.getText())
                 .reporter(userService.get(userId))
                 .propertyId(model.getPropertyId())
                 .build();
 
         reportRepository.save(report);
 
-        emailSender.send(REPORT_EMAIL_RECEIVER, "Housemate Report: " + report.getType(), report.getCause());
+        emailSender.send(REPORT_EMAIL_RECEIVER, "Housemate Report: " + report.getType(), report.getCause() + report.getText());
 
         return ModelFactory.of(report, ReportModel.class);
 
