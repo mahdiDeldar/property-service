@@ -73,27 +73,43 @@ public class UserService {
     @Transactional
     public UserModel updateProfile(UserModel profile) {
 
-        User user = get(profile.getId())
-                .toBuilder()
-                .name(profile.getName())
-                .allergy(profile.getAllergy())
-                .applicable(profile.getApplicable())
-                .languages(profile.getLanguages())
-                .birthday(profile.getBirthday())
-                .budget(profile.getBudget())
-                .description(profile.getDescription())
-                .descriptor(profile.getDescriptor())
-                .drinks(profile.getDrinks())
-                .gender(profile.getGender())
-                .location(profile.getLocation())
-                .locationId(profile.getLocationId())
-                .moveInDate(profile.getMoveInDate())
-                .imageUrl(profile.getImageUrl())
-                .photos(profile.getPhotos())
-                .smokes(profile.getSmokes())
-                .lastModifiedDate(LocalDateTime.now())
-                .hidden(profile.isHidden())
-                .build();
+        User user = get(profile.getId());
+        if (profile.getName() != null)
+            user.setName(profile.getName());
+        if (profile.getAllergy() != null)
+            user.setAllergy(profile.getAllergy());
+        if (profile.getApplicable() != null)
+            user.setApplicable(profile.getApplicable());
+        if (profile.getLanguages() != null)
+            user.setLanguages(profile.getLanguages());
+        if (profile.getBirthday() != null)
+            user.setBirthday(profile.getBirthday());
+        if (profile.getBudget() != null)
+            user.setBudget(profile.getBudget());
+        if (profile.getDescription() != null)
+            user.setDescription(profile.getDescription());
+        if (profile.getDescriptor() != null)
+            user.setDescriptor(profile.getDescriptor());
+        if (profile.getDrinks() != null)
+            user.setDrinks(profile.getDrinks());
+        if (profile.getGender() != null)
+            user.setGender(profile.getGender());
+        if (profile.getLocation() != null)
+            user.setLocation(profile.getLocation());
+        if (profile.getLocationId() != null)
+            user.setLocationId(profile.getLocationId());
+        if (profile.getMoveInDate() != null)
+            user.setMoveInDate(profile.getMoveInDate());
+        if (profile.getImageUrl() != null)
+            user.setImageUrl(profile.getImageUrl());
+        if (profile.getPhotos() != null)
+            user.setPhotos(profile.getPhotos());
+        if (profile.getSmokes() != null)
+            user.setSmokes(profile.getSmokes());
+        if (profile.isHidden() != user.isHidden())
+            user.setHidden(profile.isHidden());
+
+        user.setLastModifiedDate(LocalDateTime.now());
 
         if (profile.getImageUrl() == null && !profile.getPhotos().isEmpty())
             user.setImageUrl(profile.getPhotos().get(0));
